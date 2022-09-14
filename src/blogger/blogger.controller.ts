@@ -6,7 +6,7 @@ import {BloggerService} from "./blogger.service";
 import { CreateBloggerDto, UpdateBloggerDto } from './dto/blogger.dto';
 
 
-@Controller('bloggers')
+@Controller('blogs')
 export class BloggerController {
 
     constructor(
