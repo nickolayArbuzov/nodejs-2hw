@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, HttpCode, Param, ParseIntPipe, ParseUUIDPipe, Post, Put, UseGuards} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpCode, Inject, Param, ParseIntPipe, ParseUUIDPipe, Post, Put, UseGuards} from '@nestjs/common';
 import { CreatePostDto } from '../posts/dto/post.dto';
 import { PostService } from '../posts/post.service';
 import { AuthGuard } from '../guards/auth.guard';
@@ -6,12 +6,12 @@ import {BloggerService} from "./blogger.service";
 import { CreateBloggerDto, UpdateBloggerDto } from './dto/blogger.dto';
 
 
-@Controller('blogs')
+@Controller('bloggers')
 export class BloggerController {
 
     constructor(
         private bloggerService: BloggerService,
-        //private postService: PostService
+        private postService: PostService
     ) {}
     @Get()
     getAll() {
@@ -23,10 +23,11 @@ export class BloggerController {
         return this.bloggerService.findOne(id)
     }
 
-    /*@Get(':id/posts') 
-    getPostByBlogId(@Param('id') id: string) {
+    @Get(':id/posts') 
+    getPostByBlogId(@Param('id') id: string, @Body() any: any) { 
+        console.log(any)
         return this.postService.findAllByBlogId(id)
-    }*/
+    }
 
     @UseGuards(AuthGuard)
     @Post()

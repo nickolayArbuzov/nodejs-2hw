@@ -7,7 +7,7 @@ import { PostService } from './post.service';
 
 @Module({
   controllers: [PostController],
-  imports: [DatabaseModule, BloggerModule],
+  imports: [DatabaseModule, forwardRef(() => BloggerModule)],
   providers: [
     ...postProviders,
     PostService,

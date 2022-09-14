@@ -16,7 +16,7 @@ export class PostService {
   async findAll() {
     const all = await this.postRepository.find();
     // TODO: automapper
-    return all.map(a => {return {...a, id: a.id.toString(), bloggerId: a.bloggerId.toString()}})
+    return all.map(a => {return {...a, id: a.id.toString(), bloggerId: a.bloggerId.toString(), createdAt: a.createdAt}})
   }
 
   async findOne(id: string) {
@@ -42,6 +42,8 @@ export class PostService {
       newPost.title = dto.title
       newPost.bloggerId = dto.bloggerId
       newPost.bloggerName = donorBlogger.name
+      let date = new Date
+      newPost.createdAt = date.toISOString()
       const post = await this.postRepository.insert(newPost);
       // TODO something with id(number => string)
       return {...newPost, id: newPost.id.toString(), bloggerId: newPost.bloggerId.toString()};

@@ -15,6 +15,7 @@ export class BloggerService {
 
   async findAll() {
     const all = await this.bloggerRepository.find({relations: ['posts']});
+    // TODO: research QueryBuilder
     /*this.bloggerRepository
     .createQueryBuilder('b')
     .innerJoin('b.posts', 'p')
@@ -22,7 +23,7 @@ export class BloggerService {
     .select('')
     .addSelect('')*/
     // TODO: automapper
-    return all.map(a => {return {id: a.id.toString(), name: a.name, youtubeUrl: a.youtubeUrl}})
+    return all.map(a => {return {id: a.id.toString(), name: a.name, youtubeUrl: a.youtubeUrl, createdAt: a.createdAt}})
     //return all
   }
 
@@ -40,6 +41,8 @@ export class BloggerService {
     const newBlogger = new Blogger()
     newBlogger.name = dto.name
     newBlogger.youtubeUrl = dto.youtubeUrl
+    let date = new Date
+    newBlogger.createdAt = date.toISOString()
     const blogger = await this.bloggerRepository.insert(newBlogger);
     // TODO something with id(number => string)
     return {...newBlogger, id: newBlogger.id.toString()};
