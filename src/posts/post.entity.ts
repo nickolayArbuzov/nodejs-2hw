@@ -15,13 +15,16 @@ export class Post {
   @Column({ length: 1000 })
   content: string;
 
+  @Column()
+  createdAt: string;
+
   @Column('uuid')
-  bloggerId: string;
+  blogId: string;
 
   @Column()
-  bloggerName: string;
+  blogName: string;
 
   @ManyToOne(() => Blogger, blogger => blogger.posts, {onDelete: 'CASCADE'})
-  blogger: Blogger
+  blog: Blogger
   
 }

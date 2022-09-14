@@ -8,6 +8,6 @@ export class AppController {
   @Get()
   async getHello(): Promise<string> {
     //this.appService.seed()
-    return '2hw';
+    return 'Seed completed';
   }
 }
