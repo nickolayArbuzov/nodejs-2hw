@@ -23,7 +23,7 @@ export class BloggerService {
     .select('')
     .addSelect('')*/
     // TODO: automapper
-    return all.map(a => {return {id: a.id.toString(), name: a.name, youtubeUrl: a.youtubeUrl, createdAt: a.createdAt}})
+    return all.map(a => {return {id: a.id, name: a.name, youtubeUrl: a.youtubeUrl}})
     //return all
   }
 
@@ -31,7 +31,7 @@ export class BloggerService {
     const donorBlogger = await this.bloggerRepository.findOne({where: {id: id}});
     if(donorBlogger) {
       // TODO something with id(number => string)
-      return {...donorBlogger, id: donorBlogger.id.toString()}
+      return {...donorBlogger, id: donorBlogger.id}
     } else {
       throw new HttpException('Blogger not found', HttpStatus.NOT_FOUND);
     }
@@ -45,7 +45,7 @@ export class BloggerService {
     newBlogger.createdAt = date.toISOString()
     const blogger = await this.bloggerRepository.insert(newBlogger);
     // TODO something with id(number => string)
-    return {...newBlogger, id: newBlogger.id.toString()};
+    return {...newBlogger, id: newBlogger.id};
   }
 
   async updateBlogger(id: string, dto: UpdateBloggerDto) {
@@ -54,7 +54,7 @@ export class BloggerService {
       // TODO something with id(number => string)
       const newBlogger = {
         ...donorBlogger,
-        id: donorBlogger.id.toString(), 
+        id: donorBlogger.id, 
         name: dto.name,
         youtubeUrl: dto.youtubeUrl,
       } 

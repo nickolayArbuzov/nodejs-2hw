@@ -3,7 +3,7 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 
 @Entity('post')
 export class Post {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column({ length: 30 })
@@ -18,7 +18,7 @@ export class Post {
   @Column()
   createdAt: string;
 
-  @Column()
+  @Column('uuid')
   bloggerId: string;
 
   @Column()
