@@ -3,7 +3,7 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 
 @Entity('post')
 export class Post {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: string;
 
   @Column({ length: 30 })
@@ -16,15 +16,12 @@ export class Post {
   content: string;
 
   @Column()
-  createdAt: string;
-
-  @Column('uuid')
-  blogId: string;
+  bloggerId: string;
 
   @Column()
-  blogName: string;
+  bloggerName: string;
 
   @ManyToOne(() => Blogger, blogger => blogger.posts, {onDelete: 'CASCADE'})
-  blog: Blogger
+  blogger: Blogger
   
 }

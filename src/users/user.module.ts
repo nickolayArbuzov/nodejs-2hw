@@ -11,6 +11,5 @@ import { UserService } from './user.service';
     ...userProviders,
     UserService,
   ],
-  exports: [userProviders.find(p => p.provide === 'USER_REPOSITORY')],
 })
 export class UserModule {}

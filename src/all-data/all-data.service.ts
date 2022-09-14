@@ -1,8 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Blogger } from '../blogger/blogger.entity';
-import { Post } from '../posts/post.entity';
-import { User } from '../users/user.entity';
-import { Video } from '../videos/videos.entity';
+import { Blogger } from 'src/blogger/blogger.entity';
+import { Post } from 'src/posts/post.entity';
+import { Video } from 'src/videos/videos.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -14,15 +13,12 @@ export class AllDataService {
     private readonly bloggerRepository: Repository<Blogger>,
     @Inject('POST_REPOSITORY')
     private readonly postRepository: Repository<Post>,
-    @Inject('USER_REPOSITORY')
-    private readonly userRepository: Repository<User>,
   ) {}
 
   deleteAllData(): void {
     this.videoRepository.delete({})
     this.postRepository.delete({})
     this.bloggerRepository.delete({})
-    this.userRepository.delete({})
   }
   
 }

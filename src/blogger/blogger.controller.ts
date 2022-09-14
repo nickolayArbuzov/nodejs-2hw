@@ -1,22 +1,21 @@
-import {Body, Controller, Delete, Get, HttpCode, Inject, Param, ParseIntPipe, ParseUUIDPipe, Post, Put, Query, UseGuards, Request} from '@nestjs/common';
-import { CratePostDtoWithoutBlogId, CreatePostDto } from '../posts/dto/post.dto';
+import {Body, Controller, Delete, Get, HttpCode, Param, ParseIntPipe, ParseUUIDPipe, Post, Put, UseGuards} from '@nestjs/common';
+import { CreatePostDto } from '../posts/dto/post.dto';
 import { PostService } from '../posts/post.service';
 import { AuthGuard } from '../guards/auth.guard';
 import {BloggerService} from "./blogger.service";
 import { CreateBloggerDto, UpdateBloggerDto } from './dto/blogger.dto';
-import { QueryBlogDto } from '../commonDTO/query.dto';
 
 
-@Controller('blogs')
+@Controller('bloggers')
 export class BloggerController {
 
     constructor(
         private bloggerService: BloggerService,
-        private postService: PostService,
+        //private postService: PostService
     ) {}
     @Get()
-    getAll(@Query() query: QueryBlogDto) {
-        return this.bloggerService.findAll(query);
+    getAll() {
+        return this.bloggerService.findAll();
     }
 
     @Get(':id')
@@ -24,10 +23,10 @@ export class BloggerController {
         return this.bloggerService.findOne(id)
     }
 
-    @Get(':id/posts') 
-    getPostByBlogId(@Param('id') id: string, @Query() query: QueryBlogDto) { 
-        return this.bloggerService.findAllPostsByBlogId(id, query)
-    }
+    /*@Get(':id/posts') 
+    getPostByBlogId(@Param('id') id: string) {
+        return this.postService.findAllByBlogId(id)
+    }*/
 
     @UseGuards(AuthGuard)
     @Post()
@@ -35,15 +34,10 @@ export class BloggerController {
         return this.bloggerService.createBlogger(bloggerDto);
     }
 
-    @UseGuards(AuthGuard)
     @Post(':id/posts') 
-    creatPostForBlogId(@Param('id') id: string, @Body() postDto: CratePostDtoWithoutBlogId) {
-        return this.postService.creatPostForBlogId(id, postDto)
+    creatPostForBlogId(@Param('id') id: string, @Body() postDto: CreatePostDto) {
+        return id
     }
-    /*creatPostForBlogId(@Param('id') id: string, @Request() req) {
-
-        // return this.postService.creatPostForBlogId(id, postDto)
-    }*/
 
     @UseGuards(AuthGuard)
     @HttpCode(204)
