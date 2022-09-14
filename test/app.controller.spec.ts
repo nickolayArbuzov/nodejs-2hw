@@ -8,8 +8,8 @@ describe('PostController (e2e)', () => {
   let app: INestApplication;
 
   const blogController = '/blogs';
-    const postController = '/posts';
-    const testingController = '/testing';
+  const postController = '/posts';
+  const testingController = '/testing';
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -37,28 +37,32 @@ describe('PostController (e2e)', () => {
     await app.init();
   });
 
+  beforeEach(async () => {
+    it('should delete all data in DB and return 204 status code', async () => {
+      const url = `${testingController}/all-data`;
+      const response = await request(app.getHttpServer()).delete(url);
+      expect(response.status).toBe(204);
+      expect(response.body).toEqual({});
+    });
+  })
+
   afterAll(async () => {
     await app.close();
   });
 
-  beforeEach(async () => {
-    const url = `${testingController}/all-data`;
-    await request(app.getHttpServer()).delete(url);
-    console.log('before-each')
-  });
-
   describe('/post (GET)', () => {
     const postUrl = `${postController}`;
-    
+
     it('get post , ', async () => {
-      console.log('getpost')
       // add some services for prepare data in db
 
       const response = await request(app.getHttpServer()).get(postUrl)
-      expect(response.status).toBe(200);
-      expect(response.body).toEqual([]);
+      console.log(response.body)
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({ errors: [] });
     });
     
 
   });
 });
+
