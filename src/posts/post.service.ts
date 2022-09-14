@@ -16,14 +16,14 @@ export class PostService {
   async findAll() {
     const all = await this.postRepository.find();
     // TODO: automapper
-    return all.map(a => {return {...a, id: a.id.toString(), bloggerId: a.bloggerId.toString()}})
+    return all.map(a => {return {...a, id: a.id.toString(), blogId: a.blogId.toString()}})
   }
 
   async findOne(id: string) {
     const donorPost = await this.postRepository.findOne({where: {id: id}});
     if(donorPost) {
       // TODO something with id(number => string)
-      return {...donorPost, id: donorPost.id.toString(), bloggerId: donorPost.bloggerId.toString()}
+      return {...donorPost, id: donorPost.id.toString(), blogId: donorPost.blogId.toString()}
     } else {
       throw new HttpException('Post not found', HttpStatus.NOT_FOUND);
     }
@@ -34,18 +34,18 @@ export class PostService {
   }
 
   async createPost(dto: CreatePostDto) {
-    const donorBlogger = await this.bloggerService.findOne(dto.bloggerId)
+    const donorBlogger = await this.bloggerService.findOne(dto.blogId)
     if (donorBlogger) {
       const newPost = new Post()
       newPost.content = dto.content
       newPost.shortDescription = dto.shortDescription
       newPost.title = dto.title
-      newPost.bloggerId = dto.bloggerId
-      newPost.bloggerName = donorBlogger.name
+      newPost.blogId = dto.blogId
+      newPost.blogName = donorBlogger.name
 
       const post = await this.postRepository.insert(newPost);
       // TODO something with id(number => string)
-      return {...newPost, id: newPost.id.toString(), bloggerId: newPost.bloggerId.toString()};
+      return {...newPost, id: newPost.id.toString(), blogId: newPost.blogId.toString()};
     }
     else {
       throw new HttpException('Blogger for create-post, not found', HttpStatus.NOT_FOUND);

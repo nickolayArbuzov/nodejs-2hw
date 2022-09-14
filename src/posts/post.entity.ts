@@ -16,11 +16,12 @@ export class Post {
   content: string;
 
 
-  @Column()
-  bloggerId: string;
 
   @Column()
-  bloggerName: string;
+  blogId: string;
+
+  @Column()
+  blogName: string;
 
   @ManyToOne(() => Blogger, blogger => blogger.posts, {onDelete: 'CASCADE'})
   blogger: Blogger
