@@ -15,9 +15,6 @@ export class Post {
   @Column({ length: 1000 })
   content: string;
 
-  @Column()
-  createdAt: string;
-
   @Column('uuid')
   bloggerId: string;
 

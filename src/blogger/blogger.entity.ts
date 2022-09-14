@@ -12,9 +12,6 @@ export class Blogger {
   @Column({ length: 100 })
   youtubeUrl: string;
 
-  @Column()
-  createdAt: string;
-
   @OneToMany(() => Post, post => post.blogger)
   posts: Post[]
 
