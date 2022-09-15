@@ -31,7 +31,7 @@ export class PostService {
     //TODO: automapper
     //TODO: property order in returned obj's
     const returnedPosts = all.map(a => {
-      return {content: a.content, shortDescription: a.shortDescription, title: a.title, blogId: a.blogId, blogName: a.blogName, createdAt: a.createdAt, id: a.id}
+      return {content: a.content, shortDescription: a.shortDescription, title: a.title, blogId: a.blogId, blogName: a.blogName, id: a.id}
     })
     return {
       pagesCount: Math.ceil(count/(query.pageSize ? + +query.pageSize : +queryDefault.pageSize)), 
@@ -60,7 +60,7 @@ export class PostService {
     //TODO: automapper
     //TODO: property order in returned obj's
     const returnedPosts = all.map(a => {
-      return {content: a.content, shortDescription: a.shortDescription, title: a.title, blogId: a.blogId, blogName: a.blogName, createdAt: a.createdAt, id: a.id}
+      return {content: a.content, shortDescription: a.shortDescription, title: a.title, blogId: a.blogId, blogName: a.blogName, id: a.id}
     })
     return {
       pagesCount: Math.ceil(count/(query.pageSize ? + +query.pageSize : +queryDefault.pageSize)), 
@@ -89,8 +89,6 @@ export class PostService {
       newPost.title = dto.title
       newPost.blogId = dto.blogId
       newPost.blogName = donorBlogger.name
-      let date = new Date
-      newPost.createdAt = date.toISOString()
       const post = await this.postRepository.insert(newPost);
       return newPost
     }
@@ -108,8 +106,6 @@ export class PostService {
       newPost.title = dto.title
       newPost.blogId = id
       newPost.blogName = donorBlogger.name
-      let date = new Date
-      newPost.createdAt = date.toISOString()
       const post = await this.postRepository.insert(newPost);
       return newPost
     }

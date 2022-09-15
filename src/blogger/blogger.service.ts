@@ -37,7 +37,7 @@ export class BloggerService {
       //TODO: automapper
       //TODO: property order in returned obj's
       const returnedPosts = all.posts.slice((pageNumber-1) * pageSize, (pageNumber-1) * pageSize + pageSize).map(a => {
-        return {content: a.content, shortDescription: a.shortDescription, title: a.title, blogId: a.blogId, blogName: a.blogName, createdAt: a.createdAt, id: a.id}
+        return {content: a.content, shortDescription: a.shortDescription, title: a.title, blogId: a.blogId, blogName: a.blogName, id: a.id}
       })
       return {
         pagesCount: Math.ceil(blog.posts.length/pageSize), 
@@ -69,7 +69,7 @@ export class BloggerService {
     const count = await repo.getCount()
     //TODO: automapper
     //TODO: property order in returned obj's
-    const returnedBlogs = all.map(a => {return {name: a.name, youtubeUrl: a.youtubeUrl, createdAt: a.createdAt, id: a.id}})
+    const returnedBlogs = all.map(a => {return {name: a.name, youtubeUrl: a.youtubeUrl, id: a.id}})
     return {
       pagesCount: Math.ceil(count/(query.pageSize ? + +query.pageSize : +queryDefault.pageSize)), 
       page: query.pageNumber ? +query.pageNumber : +queryDefault.pageNumber, 
@@ -103,8 +103,6 @@ export class BloggerService {
     const newBlogger = new Blogger()
     newBlogger.name = dto.name
     newBlogger.youtubeUrl = dto.youtubeUrl
-    let date = new Date
-    newBlogger.createdAt = date.toISOString()
     const blogger = await this.bloggerRepository.insert(newBlogger);
     return newBlogger
   }
