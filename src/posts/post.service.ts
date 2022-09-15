@@ -33,13 +33,8 @@ export class PostService {
     const returnedPosts = all.map(a => {
       return {content: a.content, shortDescription: a.shortDescription, title: a.title, blogId: a.blogId, blogName: a.blogName, id: a.id}
     })
-    return {
-      pagesCount: Math.ceil(count/(query.pageSize ? + +query.pageSize : +queryDefault.pageSize)), 
-      page: query.pageNumber ? +query.pageNumber : +queryDefault.pageNumber, 
-      pageSize: query.pageSize ? +query.pageSize : +queryDefault.pageSize, 
-      totalCount: count, 
-      items: returnedPosts
-    }
+    return returnedPosts
+    
   }
 
   async findAllPostsByBlogId(id: string, query: QueryBlogDto) {
@@ -62,13 +57,8 @@ export class PostService {
     const returnedPosts = all.map(a => {
       return {content: a.content, shortDescription: a.shortDescription, title: a.title, blogId: a.blogId, blogName: a.blogName, id: a.id}
     })
-    return {
-      pagesCount: Math.ceil(count/(query.pageSize ? + +query.pageSize : +queryDefault.pageSize)), 
-      page: query.pageNumber ? +query.pageNumber : +queryDefault.pageNumber, 
-      pageSize: query.pageSize ? +query.pageSize : +queryDefault.pageSize, 
-      totalCount: count, 
-      items: returnedPosts
-    }
+    return returnedPosts
+    
   } 
 
   async findOne(id: string) {

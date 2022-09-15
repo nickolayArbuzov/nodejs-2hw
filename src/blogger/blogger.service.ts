@@ -36,16 +36,10 @@ export class BloggerService {
       const blog = await repo.where({id: id}).getOne()
       //TODO: automapper
       //TODO: property order in returned obj's
-      const returnedPosts = all.posts.slice((pageNumber-1) * pageSize, (pageNumber-1) * pageSize + pageSize).map(a => {
+      const returnedPosts = all.posts.map(a => {
         return {content: a.content, shortDescription: a.shortDescription, title: a.title, blogId: a.blogId, blogName: a.blogName, id: a.id}
       })
-      return {
-        pagesCount: Math.ceil(blog.posts.length/pageSize), 
-        page: pageNumber, 
-        pageSize: pageSize, 
-        totalCount: blog.posts.length, 
-        items: returnedPosts
-      }
+      return returnedPosts
     } else {
       throw new HttpException('Blogger not found', HttpStatus.NOT_FOUND);
     }
@@ -70,14 +64,7 @@ export class BloggerService {
     //TODO: automapper
     //TODO: property order in returned obj's
     const returnedBlogs = all.map(a => {return {name: a.name, youtubeUrl: a.youtubeUrl, id: a.id}})
-    return {
-      pagesCount: Math.ceil(count/(query.pageSize ? + +query.pageSize : +queryDefault.pageSize)), 
-      page: query.pageNumber ? +query.pageNumber : +queryDefault.pageNumber, 
-      pageSize: query.pageSize ? +query.pageSize : +queryDefault.pageSize, 
-      totalCount: count, 
-      // скорее всего связано с различной сортировкой в js и postgresql
-      items: query.sortBy === 'name' ? returnedBlogs.sort((a,b) => a.name > b.name && sortDirection === 'ASC' ? 1 : -1 ) : returnedBlogs
-    }
+    return returnedBlogs
   }
 
   // TODO: need to refactor
